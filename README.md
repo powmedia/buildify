@@ -14,6 +14,8 @@ Then install buildify via npm:
 Create a file with your build script (see the example in 'Usage' below), call it something like `build.js` and then run it with:
 
     node build.js
+
+For an example of buildify in action, see [backbone-forms](https://github.com/powmedia/backbone-forms)
   
 
 ##Usage
