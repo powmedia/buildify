@@ -5,14 +5,16 @@ var fs = require('fs'),
     uglifyJS = require('uglify-js');
 
 /**
- * @param {Object} options
- * @param {String} [options.dir]         Base directory file operations start in.
+ * @param {String} [dir]                 Starting directory absolute path. Default: current working dir
+ * @param {Object} [options]
  * @param {Object} [options.interpolate] Underscore template settings. Default to mustache {{var}} style interpolation tags.
  * @param {String} [options.encoding]    File encoding ('utf-8')
  * @param {String} [options.eol]         End of line character ('\n')
  * @param {Boolean} [options.quiet]      Whether to silence console output
  */
-function Builder(options) {
+function Builder(dir, options) {
+  dir = dir || process.cwd();
+
   this.options = _.extend({
     encoding: 'utf-8',
     eol: '\n',
@@ -22,7 +24,7 @@ function Builder(options) {
   _.templateSettings.interpolate = this.options.interpolate;
 
   //The current directory
-  this.setDir(this.options.dir || __dirname);
+  this.setDir(dir);
 
   //The content being acted on
   this.content = '';
@@ -90,7 +92,7 @@ Builder.prototype.load = function(file) {
  * @param {String} [eol]            Join character. Default: '\n'
  */
 Builder.prototype.concat = function(files, eol) {
-  eol = eol || this.options.eol;
+  eol = (_.isUndefined(eol)) ? this.options.eol : eol;
 
   if (!_.isArray(files)) files = [files];
 
@@ -102,6 +104,8 @@ Builder.prototype.concat = function(files, eol) {
 
     return fs.readFileSync(file, encoding);
   });
+
+  if (this.content) contents.unshift(this.content);
 
   this.content = contents.join(eol);
 
@@ -182,6 +186,6 @@ Builder.prototype.clear = function() {
  *
  * @param {Object} [options]    Constructor options
  */
-module.exports = function(options) {
-  return new Builder(options);
+module.exports = function(dir, options) {
+  return new Builder(dir, options);
 };

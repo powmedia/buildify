@@ -9,7 +9,6 @@ Builder for creating distributable JavaScript files from source. Concatenate, wr
     var buildify = require('buildify');
     
     buildify()
-      .setDir(__dirname + '/src')
       .load('base.js')
       .concat(['part1.js', 'part2.js'])
       .wrap('../lib/template.js', { version: '1.0' })
@@ -20,8 +19,10 @@ Builder for creating distributable JavaScript files from source. Concatenate, wr
 
 ##API
 
-###buildify([options])
+###buildify([dir, options])
 Create a new Builder instance.
+
+Takes the starting directory as the first argument, e.g. __dirname. If this is not set, the current working directory is used.
 
 Options:
 - `dir`           Base directory file operations start in.
