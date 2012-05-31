@@ -10,6 +10,10 @@ Requires NodeJS to run. [nvm](https://github.com/creationix/nvm) is an easy way 
 Then install buildify via npm:
 
     npm install buildify
+
+Create a file with your build script (see the example in 'Usage' below), call it something like `build.js` and then run it with:
+
+    node build.js
   
 
 ##Usage
