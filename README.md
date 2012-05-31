@@ -24,15 +24,16 @@ Builder for creating distributable JavaScript files from source. Concatenate, wr
 Create a new Builder instance.
 
 Options:
-- dir           Base directory file operations start in.
-- interpolate   Underscore template settings. Default to mustache {{var}} style interpolation tags.
-- encoding      File encoding ('utf-8')
-- eol           End of line character ('\n')
-- quiet         Whether to silence console output
+- `dir`           Base directory file operations start in.
+- `interpolate`   Underscore template settings. Default to mustache {{var}} style interpolation tags.
+- `encoding`      File encoding (Default 'utf-8')
+- `eol`           End of line character (Default '\n')
+- `quiet`         Whether to silence console output
 
 
 ###setDir(absolutePath)
-Set the current working directory to the given absolute path.
+Set the current working directory.
+
 
 ###changeDir(relativePath)
-Change the current working directory to the given relative path
+Change the current working directory.
