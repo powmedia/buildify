@@ -4,6 +4,14 @@ buildify
 Builder for creating distributable JavaScript files from source. Concatenate, wrap, uglify.
 
 
+##Install
+Requires NodeJS to run. [nvm](https://github.com/creationix/nvm) is an easy way to get Node up and running.
+
+Then install buildify via npm:
+
+    npm install buildify
+  
+
 ##Usage
 
     var buildify = require('buildify');
