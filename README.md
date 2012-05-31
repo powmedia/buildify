@@ -37,3 +37,37 @@ Set the current working directory.
 
 ###changeDir(relativePath)
 Change the current working directory.
+
+
+###setContent(content)
+Set the content to work with.
+
+
+###getContent()
+Get the current content. Note: breaks the chain.
+
+
+###load(file)
+Load file contents.
+
+
+###concat(files, [eol])
+Concatenate file contents.
+
+
+###wrap(template, [data])
+Wrap the contents in a template.
+
+Useful for creating AMD/CommonJS compatible versions of code, adding notes/comments to the top of the file etc.
+
+
+###uglify()
+Minimise your JS using uglifyJS.
+
+
+###save(file)
+Save the contents to a file.
+
+
+###clear()
+Reset/clear contents.
