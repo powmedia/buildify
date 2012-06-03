@@ -37,7 +37,6 @@ Create a new Builder instance.
 Takes the starting directory as the first argument, e.g. __dirname. If this is not set, the current working directory is used.
 
 Options:
-- `dir`           Base directory file operations start in.
 - `interpolate`   Underscore template settings. Default to mustache {{var}} style interpolation tags.
 - `encoding`      File encoding (Default 'utf-8')
 - `eol`           End of line character (Default '\n')
