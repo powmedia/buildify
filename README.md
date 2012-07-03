@@ -5,7 +5,7 @@ Builder for creating distributable JavaScript files from source. Concatenate, wr
 
 
 ##Install
-Requires NodeJS to run. [nvm](https://github.com/creationix/nvm) is an easy way to get Node up and running.
+Requires [NodeJS](http://nodejs.org/#download) to run.
 
 Then install buildify via npm:
 
