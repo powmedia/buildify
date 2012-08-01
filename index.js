@@ -2,7 +2,8 @@ var fs = require('fs'),
     path = require('path'),
     mkdirp = require('mkdirp'),
     _ = require('underscore'),
-    uglifyJS = require('uglify-js');
+    uglifyJS = require('uglify-js'),
+    cssmin = require('./yui_compressor_cssmin.js');
 
 /**
  * @param {String} [dir]                 Starting directory absolute path. Default: current working dir
@@ -148,6 +149,17 @@ Builder.prototype.uglify = function() {
   output = uglify.gen_code(output);
   
   this.content = output;
+
+  return this;
+};
+
+/**
+ * Minifies css content
+ */
+Builder.prototype.cssmin = function(maxLineLength) {
+  maxLineLength = (_.isUndefined(maxLineLength)) ? 320 : maxLineLength;
+
+  this.content = cssmin(this.content, maxLineLength);
 
   return this;
 };
