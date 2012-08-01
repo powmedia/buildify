@@ -77,6 +77,10 @@ Useful for creating AMD/CommonJS compatible versions of code, adding notes/comme
 Minimise your JS using uglifyJS.
 
 
+###cssmin()
+Minimise your CSS using cssmin, the JavaScript port of the CSS minification tool from YUICompressor.
+
+
 ###save(file)
 Save the contents to a file.
 
