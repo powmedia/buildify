@@ -3,7 +3,9 @@ var fs = require('fs'),
     mkdirp = require('mkdirp'),
     _ = require('underscore'),
     uglifyJS = require('uglify-js'),
-    cssmin = require('./yui_compressor_cssmin.js');
+    cssmin = require('./yui_compressor_cssmin.js'),
+    zlib = require('zlib');
+
 
 /**
  * @param {String} [dir]                 Starting directory absolute path. Default: current working dir
@@ -181,6 +183,27 @@ Builder.prototype.save = function(file) {
   if (!this.options.quiet) console.log(file);
 
   return this;
+};
+
+/**
+ * Save the contents gzip compressed to disk. Note: this method breaks the chain
+ *
+ * @param {String} file         File path relative to current directory
+ */
+Builder.prototype.saveGzip = function(file) {
+  file = path.normalize(this.dir + '/' + file);
+
+  var dir = path.dirname(file);
+  mkdirp.sync(dir);
+
+  var self = this;
+  zlib.gzip(this.content, function (err, gzipBuffer) {
+    if (err) throw err;
+    fs.writeFileSync(file, gzipBuffer);
+    if (!self.options.quiet) console.log(file);
+  });
+
+  return;
 };
 
 /**

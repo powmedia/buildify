@@ -85,5 +85,9 @@ Minimise your CSS using cssmin, the JavaScript port of the CSS minification tool
 Save the contents to a file.
 
 
+###saveGzip(file)
+Save the contents gzip compressed to a file. Note: breaks the chain.
+
+
 ###clear()
 Reset/clear contents.
