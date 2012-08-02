@@ -157,6 +157,8 @@ Builder.prototype.uglify = function() {
 
 /**
  * Minifies css content
+ *
+ * @param {number} [maxLineLength]   Add a linebreak after this number of characters in minified content.
  */
 Builder.prototype.cssmin = function(maxLineLength) {
   maxLineLength = (_.isUndefined(maxLineLength)) ? 320 : maxLineLength;
