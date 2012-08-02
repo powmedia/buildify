@@ -136,19 +136,23 @@ Builder.prototype.wrap = function(templatePath, templateData) {
   return this;
 };
 
-
 /**
  * Uglifies the content
+ *
+ * @param {number} [maxLineLength]   Add a linebreak after this number of characters in uglified content.
  */
-Builder.prototype.uglify = function() {
+Builder.prototype.uglify = function(maxLineLength) {
   var parse = uglifyJS.parser.parse,
       uglify = uglifyJS.uglify;
+
+  maxLineLength = (_.isUndefined(maxLineLength)) ? 320 : maxLineLength;
 
   var output = parse(this.content);
 
   output = uglify.ast_mangle(output);
   output = uglify.ast_squeeze(output);
   output = uglify.gen_code(output);
+  output = uglify.split_lines(output, maxLineLength);
   
   this.content = output;
 
