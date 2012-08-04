@@ -64,13 +64,36 @@ Load file contents.
 
 
 ###concat(files, [eol])
-Concatenate file contents.
+Concatenate the content of multiple files.
+
+    buildify()
+        .concat(['file1.js', 'file2.js']);
 
 
 ###wrap(template, [data])
 Wrap the contents in a template.
 
 Useful for creating AMD/CommonJS compatible versions of code, adding notes/comments to the top of the file etc.
+
+By default the template uses Mustache-style tags and has a special tag, `{{body}}` which is where the contents are placed.
+
+Other custom tags can be included and passed in the `data` argument.
+
+    //template.js
+    /*
+     * This is a module for doing stuff.
+     * Version {{version}}.
+     */
+    (function() {
+        //Setup code can go here
+        
+        {{body}}
+    });
+    
+    //build.js
+    buildify()
+        .load('src.js')
+        .wrap('template.js', { version: '1.0' });
 
 
 ###uglify()
