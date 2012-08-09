@@ -100,8 +100,16 @@ Other custom tags can be included and passed in the `data` argument.
 Minimise your JS using uglifyJS.
 
 
+###cssmin()
+Minimise your CSS using cssmin, the JavaScript port of the CSS minification tool from YUICompressor.
+
+
 ###save(file)
 Save the contents to a file.
+
+
+###saveGzip(file)
+Save the contents gzip compressed to a file. Note: breaks the chain.
 
 
 ###clear()

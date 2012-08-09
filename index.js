@@ -2,7 +2,10 @@ var fs = require('fs'),
     path = require('path'),
     mkdirp = require('mkdirp'),
     _ = require('underscore'),
-    uglifyJS = require('uglify-js');
+    uglifyJS = require('uglify-js'),
+    cssmin = require('./yui_compressor_cssmin.js'),
+    zlib = require('zlib');
+
 
 /**
  * @param {String} [dir]                 Starting directory absolute path. Default: current working dir
@@ -133,21 +136,38 @@ Builder.prototype.wrap = function(templatePath, templateData) {
   return this;
 };
 
-
 /**
  * Uglifies the content
+ *
+ * @param {number} [maxLineLength]   Add a linebreak after this number of characters in uglified content.
  */
-Builder.prototype.uglify = function() {
+Builder.prototype.uglify = function(maxLineLength) {
   var parse = uglifyJS.parser.parse,
       uglify = uglifyJS.uglify;
+
+  maxLineLength = (_.isUndefined(maxLineLength)) ? 320 : maxLineLength;
 
   var output = parse(this.content);
 
   output = uglify.ast_mangle(output);
   output = uglify.ast_squeeze(output);
   output = uglify.gen_code(output);
+  output = uglify.split_lines(output, maxLineLength);
   
   this.content = output;
+
+  return this;
+};
+
+/**
+ * Minifies css content
+ *
+ * @param {number} [maxLineLength]   Add a linebreak after this number of characters in minified content.
+ */
+Builder.prototype.cssmin = function(maxLineLength) {
+  maxLineLength = (_.isUndefined(maxLineLength)) ? 320 : maxLineLength;
+
+  this.content = cssmin(this.content, maxLineLength);
 
   return this;
 };
@@ -169,6 +189,27 @@ Builder.prototype.save = function(file) {
   if (!this.options.quiet) console.log(file);
 
   return this;
+};
+
+/**
+ * Save the contents gzip compressed to disk. Note: this method breaks the chain
+ *
+ * @param {String} file         File path relative to current directory
+ */
+Builder.prototype.saveGzip = function(file) {
+  file = path.normalize(this.dir + '/' + file);
+
+  var dir = path.dirname(file);
+  mkdirp.sync(dir);
+
+  var self = this;
+  zlib.gzip(this.content, function (err, gzipBuffer) {
+    if (err) throw err;
+    fs.writeFileSync(file, gzipBuffer);
+    if (!self.options.quiet) console.log(file);
+  });
+
+  return;
 };
 
 /**
