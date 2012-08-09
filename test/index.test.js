@@ -178,6 +178,21 @@ exports['wrap'] = function(test) {
 };
 
 
+exports['perform'] = function(test) {
+   var b = builder();
+
+   test.same(b.content, '');
+
+   b.perform(function(content) {
+      return content + 'bar';
+   });
+
+   test.same(b.content, 'bar');
+
+   test.done();
+};
+
+
 exports['uglify'] = function(test) {
   var b = builder();
 
