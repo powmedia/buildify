@@ -116,3 +116,7 @@ Save the contents to a file.
 
 ###clear()
 Reset/clear contents.
+
+
+##Changelog
+0.2.0 Add perform() for custom functions (trevorgerhardt)
