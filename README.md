@@ -96,6 +96,16 @@ Other custom tags can be included and passed in the `data` argument.
         .wrap('template.js', { version: '1.0' });
 
 
+###perform(fn)
+Perform a function to manipulate or use the content. The content is set to what the function returns.
+
+    buildify()
+        .load('src.js')
+        .perform(function(content) {
+            return content.replace(\assetpath\g, 'http://cdn.example.com');
+         });    
+
+
 ###uglify()
 Minimise your JS using uglifyJS.
 

@@ -133,6 +133,16 @@ Builder.prototype.wrap = function(templatePath, templateData) {
   return this;
 };
 
+/**
+ * Perform a function to manipulate or use the content, function must return the content
+ *
+ * @param {Function} fn     Function that takes the current content and returns it after an operation
+ */
+Builder.prototype.perform = function(fn) {
+   this.content = fn(this.content);
+
+   return this;
+};
 
 /**
  * Uglifies the content
