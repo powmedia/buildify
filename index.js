@@ -3,7 +3,7 @@ var fs = require('fs'),
     mkdirp = require('mkdirp'),
     _ = require('underscore'),
     uglifyJS = require('uglify-js'),
-    cssmin = require('./yui_compressor_cssmin.js'),
+    cleanCSS = require('clean-css'),
     zlib = require('zlib');
 
 
@@ -165,9 +165,28 @@ Builder.prototype.uglify = function(maxLineLength) {
  * @param {number} [maxLineLength]   Add a linebreak after this number of characters in minified content.
  */
 Builder.prototype.cssmin = function(maxLineLength) {
-  maxLineLength = (_.isUndefined(maxLineLength)) ? 320 : maxLineLength;
+  var content = this.content,
+      startIndex,
+      i;
 
-  this.content = cssmin(this.content, maxLineLength);
+  content = cleanCSS.process(content);
+
+  // Some source control tools don't like it when files containing lines longer
+  // than, say 8000 characters, are checked in. The linebreak option is used in
+  // that case to split long lines after a specific column.
+  if (_.isNumber(maxLineLength) && maxLineLength > 0) {
+    startIndex = 0;
+    i = 0;
+    while (i < content.length) {
+      i += 1;
+      if (content[i - 1] === '}' && i - startIndex > maxLineLength) {
+        content = content.slice(0, i) + '\n' + content.slice(i);
+        startIndex = i;
+      }
+    }
+  }
+
+  this.content = content;
 
   return this;
 };
