@@ -96,8 +96,9 @@ Other custom tags can be included and passed in the `data` argument.
         .wrap('template.js', { version: '1.0' });
 
 
-###uglify()
+###uglify([maxLineLength])
 Minimise your JS using uglifyJS.
+Optionally a line break is inserted after 'maxLineLength' characters in the uglified js file.
 
 
 ###cssmin([maxLineLength])

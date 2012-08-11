@@ -145,14 +145,18 @@ Builder.prototype.uglify = function(maxLineLength) {
   var parse = uglifyJS.parser.parse,
       uglify = uglifyJS.uglify;
 
-  maxLineLength = (_.isUndefined(maxLineLength)) ? 320 : maxLineLength;
-
   var output = parse(this.content);
 
   output = uglify.ast_mangle(output);
   output = uglify.ast_squeeze(output);
   output = uglify.gen_code(output);
-  output = uglify.split_lines(output, maxLineLength);
+
+  // Some source control tools don't like it when files containing lines longer
+  // than, say 8000 characters, are checked in. The linebreak option is used in
+  // that case to split long lines after a specific column.
+  if (_.isNumber(maxLineLength) && maxLineLength > 0) {
+    output = uglify.split_lines(output, maxLineLength);
+  }
   
   this.content = output;
 
