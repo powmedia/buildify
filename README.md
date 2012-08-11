@@ -100,8 +100,9 @@ Other custom tags can be included and passed in the `data` argument.
 Minimise your JS using uglifyJS.
 
 
-###cssmin()
-Minimise your CSS using cssmin, the JavaScript port of the CSS minification tool from YUICompressor.
+###cssmin([maxLineLength])
+Minimise your CSS using clean-css.
+Optionally a line break is inserted after 'maxLineLength' characters in the minimized css file.
 
 
 ###save(file)
