@@ -2,6 +2,7 @@
 
 var builder = require('../index.js'),
     mkdirp = require('mkdirp'),
+    path = require('path'),
     fs = require('fs'),
     sinon = require('sinon');
 
@@ -53,7 +54,7 @@ exports['setDir'] = function(test) {
 
   b.setDir('/foo/bar');
 
-  test.same(b.dir, '/foo/bar');
+  test.same(b.dir, path.normalize('/foo/bar'));
 
   test.same(b, b.setDir('/'), 'Returns self for chaining');
 
@@ -64,16 +65,16 @@ exports['setDir'] = function(test) {
 exports['changeDir'] = function(test) {
   var b = builder('/foo');
 
-  test.same(b.dir, '/foo');
+  test.same(b.dir, path.normalize('/foo'));
 
   b.changeDir('bar');
-  test.same(b.dir, '/foo/bar');
+  test.same(b.dir, path.normalize('/foo/bar'));
 
   b.changeDir('..');
-  test.same(b.dir, '/foo');
+  test.same(b.dir, path.normalize('/foo'));
 
   b.changeDir('./bar/baz/..');
-  test.same(b.dir, '/foo/bar');
+  test.same(b.dir, path.normalize('/foo/bar'));
 
   test.same(b, b.changeDir('.'), 'Returns self for chaining');
 
@@ -230,12 +231,12 @@ exports['save'] = {
 
     //Test make directory recursively
     test.same(mkdirp.sync.lastCall.args, [
-      __dirname + '/support/path/to/file'
+      path.normalize(__dirname + '/support/path/to/file')
     ]);
 
     //Test wrote file OK
     test.same(fs.writeFileSync.lastCall.args, [
-      __dirname + '/support/path/to/file/output.txt',
+      path.normalize(__dirname + '/support/path/to/file/output.txt'),
       'test'
     ]);
 
