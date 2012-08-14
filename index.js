@@ -2,7 +2,9 @@ var fs = require('fs'),
     path = require('path'),
     mkdirp = require('mkdirp'),
     _ = require('underscore'),
-    uglifyJS = require('uglify-js');
+    uglifyJS = require('uglify-js'),
+    cleanCSS = require('clean-css');
+
 
 /**
  * @param {String} [dir]                 Starting directory absolute path. Default: current working dir
@@ -158,6 +160,38 @@ Builder.prototype.uglify = function() {
   output = uglify.gen_code(output);
   
   this.content = output;
+
+  return this;
+};
+
+/**
+ * Minimizes css content
+ *
+ * @param {number} [maxLineLength]   Add a linebreak after this number of characters in minimized content.
+ */
+Builder.prototype.cssmin = function(maxLineLength) {
+  var content = this.content,
+      startIndex,
+      i;
+
+  content = cleanCSS.process(content);
+
+  // Some source control tools don't like it when files containing lines longer
+  // than, say 8000 characters, are checked in. The linebreak option is used in
+  // that case to split long lines after a specific column.
+  if (_.isNumber(maxLineLength) && maxLineLength > 0) {
+    startIndex = 0;
+    i = 0;
+    while (i < content.length) {
+      i += 1;
+      if (content[i - 1] === '}' && i - startIndex > maxLineLength) {
+        content = content.slice(0, i) + '\n' + content.slice(i);
+        startIndex = i;
+      }
+    }
+  }
+
+  this.content = content;
 
   return this;
 };
