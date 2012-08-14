@@ -119,4 +119,8 @@ Reset/clear contents.
 
 
 ##Changelog
-0.2.0 Add perform() for custom functions (trevorgerhardt)
+master
+Fix tests under Windows (RustyMarvin)
+
+0.2.0
+Add perform() for custom functions (trevorgerhardt)
