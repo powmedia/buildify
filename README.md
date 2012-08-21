@@ -110,6 +110,11 @@ Perform a function on the content. The content is set to what the function retur
 Minimise your JS using uglifyJS.
 
 
+###cssmin([maxLineLength])
+Minimise your CSS using clean-css.
+Optionally a line break is inserted after 'maxLineLength' characters in the minimized css file.
+
+
 ###save(file)
 Save the contents to a file.
 
