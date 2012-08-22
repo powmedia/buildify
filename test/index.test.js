@@ -207,6 +207,35 @@ exports['uglify'] = function(test) {
 };
 
 
+exports['cssmin'] = {
+  'default': function(test) {
+    var b = builder(),
+        css = ' .cl  {\n \t /* comment */ \n \t color:  #FFFFFF ; \n \t font-weight: normal ; \n \t margin: 0px 0px 0px 0px ; \n } \n \n  .cx  {\n \t /* comment */ \n \t color:  #000000 ; \n \t font-weight: bold ; \n } \n \n ';
+
+    b.setContent(css);
+
+    b.cssmin();
+
+    test.same(b.content, '.cl{color:#FFF;font-weight:400;margin:0}.cx{color:#000;font-weight:700}');
+
+    test.done();
+  },
+
+  'limit line length': function(test) {
+    var b = builder(),
+        css = ' .cl  {\n \t /* comment */ \n \t color:  #FFFFFF ; \n \t font-weight: normal ; \n \t margin: 0px 0px 0px 0px ; \n } \n \n  .cx  {\n \t /* comment */ \n \t color:  #000000 ; \n \t font-weight: bold ; \n } \n \n ';
+
+    b.setContent(css);
+
+    b.cssmin(39);
+
+    test.same(b.content, '.cl{color:#FFF;font-weight:400;margin:0}\n.cx{color:#000;font-weight:700}');
+
+    test.done();
+  }
+};
+
+
 exports['save'] = {
   setUp: function(done) {
     this.sinon = sinon.sandbox.create();
