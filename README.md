@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/powmedia/buildify.png)](http://travis-ci.org/powmedia/buildify)
 buildify
 ===
 
