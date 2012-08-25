@@ -124,7 +124,8 @@ Reset/clear contents.
 
 
 ##Changelog
-master
+0.3.0
+Add cssmin() for minifying CSS (RustyMarvin)
 Fix tests under Windows (RustyMarvin)
 
 0.2.0
