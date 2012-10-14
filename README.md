@@ -115,6 +115,13 @@ Minimise your CSS using clean-css.
 Optionally a line break is inserted after 'maxLineLength' characters in the minimized css file.
 
 
+###compileStyl()
+Compile a Stylus file.
+
+
+###compileCoffee()
+Compile a CoffeeScript file.
+
 ###save(file)
 Save the contents to a file.
 

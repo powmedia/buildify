@@ -3,6 +3,8 @@ var fs = require('fs'),
     mkdirp = require('mkdirp'),
     _ = require('underscore'),
     uglifyJS = require('uglify-js'),
+    stylus = require('stylus'),
+    coffeeScript = require('coffee-script'),
     cleanCSS = require('clean-css');
 
 
@@ -190,6 +192,32 @@ Builder.prototype.cssmin = function(maxLineLength) {
       }
     }
   }
+
+  this.content = content;
+
+  return this;
+};
+
+/**
+ * Compile styl files
+ */
+Builder.prototype.compileStyl = function() {
+  var content = this.content;
+  stylus(content).set('compress', true).render(function(err, css){
+    content = css;
+  });
+
+  this.content = content;
+
+  return this;
+};
+
+/**
+ * Compile Coffee files
+ */
+Builder.prototype.compileCoffee = function() {
+  var content = this.content;
+  content = coffeeScript.compile(content, {bare:true});
 
   this.content = content;
 
