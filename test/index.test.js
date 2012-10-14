@@ -236,6 +236,29 @@ exports['cssmin'] = {
 };
 
 
+exports['compileStyl'] = function(test) {
+  var b = builder();
+
+  b.setContent('body\n \t font 12px Helvetica, Arial, sans-serif\n \na.button\n \t border-radius 5px');
+  b.compileStyl();
+
+  test.same(b.content, 'body{font:12px Helvetica,Arial,sans-serif}\na.button{border-radius:5px}\n');
+
+  test.done();
+}
+
+
+exports['compileCoffee'] = function(test) {
+  var b = builder();
+
+  b.setContent('play() while life is on');
+  b.compileCoffee();
+
+  test.same(b.content, '\nwhile (life === true) {\n  play();\n}\n');
+
+  test.done();
+}
+
 exports['save'] = {
   setUp: function(done) {
     this.sinon = sinon.sandbox.create();
