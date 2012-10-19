@@ -130,3 +130,6 @@ Fix tests under Windows (RustyMarvin)
 
 0.2.0
 Add perform() for custom functions (trevorgerhardt)
+
+
+Tester

@@ -56,7 +56,7 @@ Builder.prototype.changeDir = function(relativePath) {
 
 /**
  * Set the content to work with
- * 
+ *
  * @param {String} content
  */
 Builder.prototype.setContent = function(content) {
@@ -67,7 +67,7 @@ Builder.prototype.setContent = function(content) {
 
 /**
  * Returns the content. Note: this method breaks the chain
- * 
+ *
  * @return {String}
  */
 Builder.prototype.getContent = function() {
@@ -89,7 +89,7 @@ Builder.prototype.load = function(file) {
 
 /**
  * Concatenate file contents
- * 
+ *
  * @param {String|String[]} files   File path(s) relative to current directory
  * @param {String} [eol]            Join character. Default: '\n'
  */
@@ -155,10 +155,10 @@ Builder.prototype.uglify = function() {
 
   var output = parse(this.content);
 
-  output = uglify.ast_mangle(output);
+  output = uglify.ast_mangle(output,{mangle: true});
   output = uglify.ast_squeeze(output);
   output = uglify.gen_code(output);
-  
+
   this.content = output;
 
   return this;
