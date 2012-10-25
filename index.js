@@ -148,14 +148,21 @@ Builder.prototype.perform = function(fn) {
 
 /**
  * Uglifies the content
+ *
+ * @param {Object} [options]
+ * @param {Boolean} [options.mangle]    Whether to mangle variable names etc. Default: true
  */
-Builder.prototype.uglify = function() {
+Builder.prototype.uglify = function(options) {
+  options = _.extend({
+    mangle: true
+  }, options);
+
   var parse = uglifyJS.parser.parse,
       uglify = uglifyJS.uglify;
 
   var output = parse(this.content);
 
-  output = uglify.ast_mangle(output);
+  output = uglify.ast_mangle(output, { mangle: options.mangle });
   output = uglify.ast_squeeze(output);
   output = uglify.gen_code(output);
   

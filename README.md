@@ -106,8 +106,11 @@ Perform a function on the content. The content is set to what the function retur
          });    
 
 
-###uglify()
+###uglify(options)
 Minimise your JS using uglifyJS.
+
+Options:
+- mangle: Whether to mangle output from UglifyJS. Default: true
 
 
 ###cssmin([maxLineLength])
@@ -124,6 +127,9 @@ Reset/clear contents.
 
 
 ##Changelog
+0.3.1
+Fix mangling (can be disabled with mangle: false option in uglify()) (powmedia, whadar)
+
 0.3.0
 Add cssmin() for minifying CSS (RustyMarvin)
 Fix tests under Windows (RustyMarvin)

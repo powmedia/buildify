@@ -194,16 +194,30 @@ exports['perform'] = function(test) {
 };
 
 
-exports['uglify'] = function(test) {
-  var b = builder();
+exports['uglify'] = {
+  'default options': function(test) {
+    var b = builder();
 
-  b.setContent('  foo  =   123;   ')
+    b.setContent('function test() { var longvar = 123; }');
 
-  b.uglify();
+    b.uglify();
 
-  test.same(b.content, 'foo=123');
+    test.same(b.content, 'function test(){var e=123}');
 
-  test.done();
+    test.done();
+  },
+
+  'mangle: false': function(test) {
+    var b = builder();
+
+    b.setContent('function test() { var longvar = 123; }');
+
+    b.uglify({ mangle: false });
+
+    test.same(b.content, 'function test(){var longvar=123}');
+
+    test.done();
+  }
 };
 
 
