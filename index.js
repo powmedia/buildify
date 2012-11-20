@@ -226,8 +226,8 @@ Builder.prototype.compileCoffee = function() {
 
 /**
  * Load files regex
+ * 
  * @param regex
- *
  */
 Builder.prototype.loadRegex = function(regex) {
   var walker   =  require('wrench');

@@ -123,7 +123,7 @@ Compile a Stylus file.
 Compile a CoffeeScript file.
 
 
-###loadRegex()
+###loadRegex(regex)
 Concatenate the content of multiple files that match the "regex" criteria.
 Recursive (Looks up inside directories)
 
