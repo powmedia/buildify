@@ -225,6 +225,24 @@ Builder.prototype.compileCoffee = function() {
 };
 
 /**
+ * Load files regex
+ * @param regex
+ *
+ */
+Builder.prototype.loadRegex = function(regex) {
+  var walker   =  require('wrench');
+  var files    = [];
+  var contents    = [];
+
+  files = walker.readdirSyncRecursive(this.dir);
+  for (var i=0,len=files.length;i<len;i++) {
+    if (files[i].match(regex))
+      contents.push(files[i]);
+  }
+  this.concat(contents);
+};
+
+/**
  * Save the contents to disk
  *
  * @param {String} file         File path relative to current directory

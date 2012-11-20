@@ -122,6 +122,12 @@ Compile a Stylus file.
 ###compileCoffee()
 Compile a CoffeeScript file.
 
+
+###loadRegex()
+Concatenate the content of multiple files that match the "regex" criteria.
+Recursive (Looks up inside directories)
+
+
 ###save(file)
 Save the contents to a file.
 
@@ -131,6 +137,10 @@ Reset/clear contents.
 
 
 ##Changelog
+0.4.2
+Add compileStyl() and compileCoffee() for Stylus and CoffeeScript
+Add loadRegex() pseudo regex for concatenate files matching criteria
+
 0.3.0
 Add cssmin() for minifying CSS (RustyMarvin)
 Fix tests under Windows (RustyMarvin)

@@ -259,6 +259,18 @@ exports['compileCoffee'] = function(test) {
   test.done();
 }
 
+
+exports['loadRegex'] = function(test) {
+  var b = builder(__dirname + '/support');
+
+  b.loadRegex("^[a-z]{3}.txt");
+
+  test.same(b.content, 'BAR\nFOO');
+
+  test.done();
+}
+
+
 exports['save'] = {
   setUp: function(done) {
     this.sinon = sinon.sandbox.create();
