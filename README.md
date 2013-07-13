@@ -9,25 +9,29 @@ Requires [NodeJS](http://nodejs.org/#download) to run.
 
 Then install buildify via npm:
 
-    npm install buildify
+```sh
+npm install buildify
+```
 
 Create a file with your build script (see the example in 'Usage' below), call it something like `build.js` and then run it with:
 
-    node build.js
-  
+```sh
+node build.js
+```
 
 ##Usage
 
-    var buildify = require('buildify');
-    
-    buildify()
-      .load('base.js')
-      .concat(['part1.js', 'part2.js'])
-      .wrap('../lib/template.js', { version: '1.0' })
-      .save('../distribution/output.js')
-      .uglify()
-      .save('../distribution/output.min.js');
+```js
+var buildify = require('buildify');
 
+buildify()
+  .load('base.js')
+  .concat(['part1.js', 'part2.js'])
+  .wrap('../lib/template.js', { version: '1.0' })
+  .save('../distribution/output.js')
+  .uglify()
+  .save('../distribution/output.min.js');
+```
 
 ##API
 
@@ -66,8 +70,10 @@ Load file contents.
 ###concat(files, [eol])
 Concatenate the content of multiple files.
 
-    buildify()
-        .concat(['file1.js', 'file2.js']);
+```js
+buildify()
+    .concat(['file1.js', 'file2.js']);
+```
 
 
 ###wrap(template, [data])
@@ -79,32 +85,34 @@ By default the template uses Mustache-style tags and has a special tag, `{{body}
 
 Other custom tags can be included and passed in the `data` argument.
 
-    //template.js
-    /*
-     * This is a module for doing stuff.
-     * Version {{version}}.
-     */
-    (function() {
-        //Setup code can go here
-        
-        {{body}}
-    });
-    
-    //build.js
-    buildify()
-        .load('src.js')
-        .wrap('template.js', { version: '1.0' });
+```js
+//template.js
+/*
+ * This is a module for doing stuff.
+ * Version {{version}}.
+ */
+(function() {
+    //Setup code can go here
 
+    {{body}}
+});
+
+//build.js
+buildify()
+    .load('src.js')
+    .wrap('template.js', { version: '1.0' });
+```
 
 ###perform(fn)
 Perform a function on the content. The content is set to what the function returns.
 
-    buildify()
-        .load('src.js')
-        .perform(function(content) {
-            return content.replace(\assetpath\g, 'http://cdn.example.com');
-         });    
-
+```js
+buildify()
+    .load('src.js')
+    .perform(function(content) {
+        return content.replace(\assetpath\g, 'http://cdn.example.com');
+     });
+```
 
 ###uglify(options)
 Minimise your JS using uglifyJS.
@@ -125,8 +133,77 @@ Save the contents to a file.
 ###clear()
 Reset/clear contents.
 
+## Tasks
+
+Buildify supports tasks, allowing to separate a build script in different
+sections. Dependencies can be specified between tasks.
+By specifying tasks names as command line arguments, buildify will only run
+the specified tasks, taking into account their dependencies
+
+For example create a script named `buildify.js` with the following contents:
+```js
+var buildify = require('../index');
+
+buildify.task({
+  name: 'minify',
+  depends: ['concat'],
+  task: function () {
+    console.log('minify...');
+  }
+});
+
+buildify.task({
+  name: 'concat',
+  task: function () {
+    console.log('concat...');
+  }
+});
+```
+
+To run all tasks, just run the script:
+```sh
+node buildify.js
+```
+
+To run a specific task, specify the task name as command line arguments.
+```sh
+node buildify.js concat
+```
+
+### Tasks API
+
+#### buildify.task(options)
+
+Create a task.
+
+Options:
+- `name`    A string containing the task name
+- `desc`    An optional description of the task
+- `depends` An optional string or an array with strings containing the name(s)
+            of tasks which this task depends on.
+- `task`:   The function to be executed as task, doing the actual work.
+            Optional.
+
+
+## Command Line Interface
+
+When installed globally, the command line application `buildify` is available.
+Running `buildify` will execute the script named `buildify.js` in the current
+directory (typically the root of a project).
+
+```sh
+buildify [tasks]
+```
+
+Optionally, a list of task names can be provided to only execute specified tasks.
+If no tasks are provided, buildify will run the script including all tasks.
+
 
 ##Changelog
+
+0.4.0
+Implemented tasks (josdejong)
+
 0.3.1
 Fix mangling (can be disabled with mangle: false option in uglify()) (powmedia, whadar)
 

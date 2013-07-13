@@ -3,8 +3,8 @@ var fs = require('fs'),
     mkdirp = require('mkdirp'),
     _ = require('underscore'),
     uglifyJS = require('uglify-js'),
-    cleanCSS = require('clean-css');
-
+    cleanCSS = require('clean-css'),
+    tasks = require('./tasks.js');
 
 /**
  * @param {String} [dir]                 Starting directory absolute path. Default: current working dir
@@ -56,7 +56,7 @@ Builder.prototype.changeDir = function(relativePath) {
 
 /**
  * Set the content to work with
- * 
+ *
  * @param {String} content
  */
 Builder.prototype.setContent = function(content) {
@@ -67,12 +67,12 @@ Builder.prototype.setContent = function(content) {
 
 /**
  * Returns the content. Note: this method breaks the chain
- * 
+ *
  * @return {String}
  */
 Builder.prototype.getContent = function() {
   return this.content;
-}
+};
 
 /**
  * Load file contents
@@ -89,7 +89,7 @@ Builder.prototype.load = function(file) {
 
 /**
  * Concatenate file contents
- * 
+ *
  * @param {String|String[]} files   File path(s) relative to current directory
  * @param {String} [eol]            Join character. Default: '\n'
  */
@@ -141,9 +141,9 @@ Builder.prototype.wrap = function(templatePath, templateData) {
  * @param {Function} fn     Function that takes the current content and returns it after an operation
  */
 Builder.prototype.perform = function(fn) {
-   this.content = fn(this.content);
+  this.content = fn(this.content);
 
-   return this;
+  return this;
 };
 
 /**
@@ -165,7 +165,7 @@ Builder.prototype.uglify = function(options) {
   output = uglify.ast_mangle(output, { mangle: options.mangle });
   output = uglify.ast_squeeze(output);
   output = uglify.gen_code(output);
-  
+
   this.content = output;
 
   return this;
@@ -231,7 +231,6 @@ Builder.prototype.clear = function() {
   return this;
 };
 
-
 /**
  * Factory method which creates a new builder
  *
@@ -239,4 +238,24 @@ Builder.prototype.clear = function() {
  */
 module.exports = function(dir, options) {
   return new Builder(dir, options);
+};
+
+/**
+ * Add a task
+ * @param {{
+ *          name: String,
+ *          (depends: String | String[]),
+ *          (desc: String),
+ *          (task: Function)
+ *        }} options
+ */
+var builderTasks = null; // singleton, lazy loaded
+module.exports.task = function (options) {
+  // create a tasks if needed
+  if (!builderTasks) {
+    builderTasks = tasks(options);
+  }
+
+  // add the task to the list
+  builderTasks.task(options);
 };
