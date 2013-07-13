@@ -56,7 +56,7 @@ Builder.prototype.changeDir = function(relativePath) {
 
 /**
  * Set the content to work with
- * 
+ *
  * @param {String} content
  */
 Builder.prototype.setContent = function(content) {
@@ -67,7 +67,7 @@ Builder.prototype.setContent = function(content) {
 
 /**
  * Returns the content. Note: this method breaks the chain
- * 
+ *
  * @return {String}
  */
 Builder.prototype.getContent = function() {
@@ -89,7 +89,7 @@ Builder.prototype.load = function(file) {
 
 /**
  * Concatenate file contents
- * 
+ *
  * @param {String|String[]} files   File path(s) relative to current directory
  * @param {String} [eol]            Join character. Default: '\n'
  */
@@ -141,9 +141,9 @@ Builder.prototype.wrap = function(templatePath, templateData) {
  * @param {Function} fn     Function that takes the current content and returns it after an operation
  */
 Builder.prototype.perform = function(fn) {
-   this.content = fn(this.content);
+  this.content = fn(this.content);
 
-   return this;
+  return this;
 };
 
 /**
@@ -165,7 +165,7 @@ Builder.prototype.uglify = function(options) {
   output = uglify.ast_mangle(output, { mangle: options.mangle });
   output = uglify.ast_squeeze(output);
   output = uglify.gen_code(output);
-  
+
   this.content = output;
 
   return this;
@@ -241,7 +241,21 @@ module.exports = function(dir, options) {
 };
 
 /**
- * export a method to create tasks
- * TODO: replace this with something more elegant?
+ * Add a task
+ * @param {{
+ *          name: String,
+ *          (depends: String | String[]),
+ *          (desc: String),
+ *          (task: Function)
+ *        }} options
  */
-module.exports.task = tasks.task;
+var builderTasks = null; // singleton, lazy loaded
+module.exports.task = function (options) {
+  // create a tasks if needed
+  if (!builderTasks) {
+    builderTasks = tasks(options);
+  }
+
+  // add the task to the list
+  builderTasks.task(options);
+};

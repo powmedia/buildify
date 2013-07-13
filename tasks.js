@@ -37,35 +37,35 @@ function Tasks (options) {
  *          (depends: String | String[]),
  *          (desc: String),
  *          (task: Function)
- *        }} config
+ *        }} options
  */
-Tasks.prototype.task = function task (config) {
+Tasks.prototype.task = function task (options) {
   // test requirements
-  if (!config) {
+  if (!options) {
     throw new SyntaxError('Task configuration expected');
   }
-  if (!config.name) {
+  if (!options.name) {
     throw new SyntaxError('Parameter "name" missing');
   }
-  else if (this.tasks[config.name]) {
+  else if (this.tasks[options.name]) {
     throw new SyntaxError('Task already existing');
   }
 
   // create task
   var task = {
-    name: config.name,
-    desc: config.desc,
-    task: config.task,
+    name: options.name,
+    desc: options.desc,
+    task: options.task,
     executed: false
   };
 
   // write dependencies
-  if (config.depends instanceof Array) {
-    task.depends = config.depends;
+  if (options.depends instanceof Array) {
+    task.depends = options.depends;
   }
-  else if (config.depends) {
+  else if (options.depends) {
     task.depends = [
-      config.depends
+      options.depends
     ];
   }
   else {
@@ -160,11 +160,10 @@ Tasks.prototype.run = function run () {
 };
 
 /**
- * Export a singleton Tasks object
+ * Factory method which creates a new Tasks
+ *
+ * @param {Object} [options]    Constructor options
  */
-var tasks = new Tasks(); // singleton
-module.exports = {
-  task:       tasks.task.bind(tasks),
-  run:        tasks.run.bind(tasks),
-  setOptions: tasks.setOptions.bind(tasks)
+module.exports = function(options) {
+  return new Tasks(options);
 };
