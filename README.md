@@ -133,12 +133,7 @@ Save the contents to a file.
 ###clear()
 Reset/clear contents.
 
-
-### task()
-Create a task. Buildify supports modularizing a build script in different tasks,
-and define dependencies between tasks.
-By specifying tasks names as command line arguments, buildify will only run
-the specified tasks and their dependencies.
+## Tasks
 
 For example create a script named `buildify.js` with the following contents:
 ```js
@@ -169,6 +164,36 @@ To run a specific task, specify the task name as command line arguments.
 ```sh
 node buildify.js concat
 ```
+
+### Tasks API
+
+#### buildify.task(options)
+Create a task. Buildify supports modularizing a build script in different tasks,
+and define dependencies between tasks.
+By specifying tasks names as command line arguments, buildify will only run
+the specified tasks and their dependencies.
+
+Options:
+- `name`    A string containing the task name
+- `desc`    An optional description of the task
+- `depends` An optional string or an array with strings containing the name(s)
+            of tasks which this task depends on.
+- `task`:   The function to be executed as task, doing the actual work.
+            Optional.
+
+
+## Command Line Interface
+
+When installed globally, the command line application `buildify` is available.
+Running `buildify` will execute the script named `buildify.js` in the current
+directory (typically the root of a project).
+
+```sh
+buildify [tasks]
+```
+
+Optionally, a list of task names can be provided to only execute specified tasks.
+If no tasks are provided, buildify will run the script including all tasks.
 
 
 ##Changelog
