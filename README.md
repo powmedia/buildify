@@ -135,8 +135,8 @@ Reset/clear contents.
 
 ## Tasks
 
-Buildify supports separate a build script in different tasks,
-and define dependencies between these tasks.
+Buildify supports tasks, allowing to separate a build script in different
+sections. Dependencies can be specified between tasks.
 By specifying tasks names as command line arguments, buildify will only run
 the specified tasks, taking into account their dependencies
 
