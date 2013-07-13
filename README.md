@@ -135,6 +135,11 @@ Reset/clear contents.
 
 ## Tasks
 
+Buildify supports separate a build script in different tasks,
+and define dependencies between these tasks.
+By specifying tasks names as command line arguments, buildify will only run
+the specified tasks, taking into account their dependencies
+
 For example create a script named `buildify.js` with the following contents:
 ```js
 var buildify = require('../index');
@@ -168,10 +173,8 @@ node buildify.js concat
 ### Tasks API
 
 #### buildify.task(options)
-Create a task. Buildify supports modularizing a build script in different tasks,
-and define dependencies between tasks.
-By specifying tasks names as command line arguments, buildify will only run
-the specified tasks and their dependencies.
+
+Create a task.
 
 Options:
 - `name`    A string containing the task name
