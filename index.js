@@ -3,8 +3,8 @@ var fs = require('fs'),
     mkdirp = require('mkdirp'),
     _ = require('underscore'),
     uglifyJS = require('uglify-js'),
-    cleanCSS = require('clean-css');
-
+    cleanCSS = require('clean-css'),
+    tasks = require('./tasks.js');
 
 /**
  * @param {String} [dir]                 Starting directory absolute path. Default: current working dir
@@ -72,7 +72,7 @@ Builder.prototype.setContent = function(content) {
  */
 Builder.prototype.getContent = function() {
   return this.content;
-}
+};
 
 /**
  * Load file contents
@@ -231,7 +231,6 @@ Builder.prototype.clear = function() {
   return this;
 };
 
-
 /**
  * Factory method which creates a new builder
  *
@@ -240,3 +239,9 @@ Builder.prototype.clear = function() {
 module.exports = function(dir, options) {
   return new Builder(dir, options);
 };
+
+/**
+ * export a method to create tasks
+ * TODO: replace this with something more elegant?
+ */
+module.exports.task = tasks.task;
