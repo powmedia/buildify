@@ -1,5 +1,5 @@
 /**
- * This script contains three buildify tasks:
+ * This script contains four buildify tasks:
  *
  * concat
  * minify (depends on concat)
