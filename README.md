@@ -134,7 +134,48 @@ Save the contents to a file.
 Reset/clear contents.
 
 
+### task()
+Create a task. Buildify supports modularizing a build script in different tasks,
+and define dependencies between tasks.
+By specifying tasks names as command line arguments, buildify will only run
+the specified tasks and their dependencies.
+
+For example create a script named `buildify.js` with the following contents:
+```js
+var buildify = require('../index');
+
+buildify.task({
+  name: 'minify',
+  depends: ['concat'],
+  task: function () {
+    console.log('minify...');
+  }
+});
+
+buildify.task({
+  name: 'concat',
+  task: function () {
+    console.log('concat...');
+  }
+});
+```
+
+To run all tasks, just run the script:
+```sh
+node buildify.js
+```
+
+To run a specific task, specify the task name as command line arguments.
+```sh
+node buildify.js concat
+```
+
+
 ##Changelog
+
+0.4.0
+Implemented tasks (josdejong)
+
 0.3.1
 Fix mangling (can be disabled with mangle: false option in uglify()) (powmedia, whadar)
 
