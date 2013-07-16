@@ -142,20 +142,20 @@ the specified tasks, taking into account their dependencies
 
 For example create a script named `buildify.js` with the following contents:
 ```js
-var buildify = require('../index');
+var buildify = require('buildify');
 
 buildify.task({
-  name: 'minify',
-  depends: ['concat'],
+  name: 'task2',
+  depends: ['task1'],
   task: function () {
-    console.log('minify...');
+    console.log('task2...');
   }
 });
 
 buildify.task({
-  name: 'concat',
+  name: 'task1',
   task: function () {
-    console.log('concat...');
+    console.log('task1...');
   }
 });
 ```
