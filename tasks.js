@@ -36,10 +36,10 @@ function Tasks (options) {
  *          name: String,
  *          (depends: String | String[]),
  *          (desc: String),
- *          (task: Function)
+ *          (run: Function)
  *        }} options
  */
-Tasks.prototype.task = function task (options) {
+Tasks.prototype.task = function (options) {
   // test requirements
   if (!options) {
     throw new SyntaxError('Task configuration expected');
@@ -55,9 +55,15 @@ Tasks.prototype.task = function task (options) {
   var task = {
     name: options.name,
     desc: options.desc,
-    task: options.task,
+    run: options.run,
     executed: false
   };
+
+  // check for deprecated property 'task' (now 'run')
+  if (options.task) {
+    task.run = options.task;
+    console.log('Warning: Task property \'task\' is deprecated. Use \'run\' instead.');
+  }
 
   // write dependencies
   if (options.depends instanceof Array) {
@@ -94,7 +100,7 @@ Tasks.prototype.setOptions = function setOptions (options) {
  *          name: String,
  *          (depends: String | String[]),
  *          (desc: String),
- *          (task: Function)
+ *          (run: Function)
  *        }} task
  * @private
  */
@@ -118,8 +124,11 @@ Tasks.prototype._runTask = function _runTask (task) {
   }
 
   // execute the task itself
-  if (task.task) {
-    task.task();
+  if (task.run) {
+    if (!(typeof task.run === 'function')) {
+      throw new TypeError('Property \'run\' must be a function.');
+    }
+    task.run();
   }
 };
 

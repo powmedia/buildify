@@ -147,14 +147,14 @@ var buildify = require('../index');
 buildify.task({
   name: 'minify',
   depends: ['concat'],
-  task: function () {
+  run: function () {
     console.log('minify...');
   }
 });
 
 buildify.task({
   name: 'concat',
-  task: function () {
+  run: function () {
     console.log('concat...');
   }
 });
@@ -181,7 +181,7 @@ Options:
 - `desc`    An optional description of the task
 - `depends` An optional string or an array with strings containing the name(s)
             of tasks which this task depends on.
-- `task`:   The function to be executed as task, doing the actual work.
+- `run`:    The function to be executed as task, doing the actual work.
             Optional.
 
 
@@ -205,7 +205,8 @@ If no tasks are provided, buildify will run the script including all tasks.
 
 - Improved command line interface (josdejong)
 - Renamed default build script for the command line interface from `buildify.js`
-  to `build.js`.
+  to `build.js` to prevent name conflics on Windows.
+- Renamed task property `task` to `run` for more clarity.
 
 0.4.0
 

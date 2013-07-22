@@ -306,7 +306,7 @@ exports['clear'] = function(test) {
 };
 
 exports['tasks - run all tasks'] = function(test) {
-  alltasks = exec('node ' + __dirname + '/tasks/tasks.js',
+  alltasks = exec('node ' + __dirname + '/tasks/tasks.test.js',
       function (error, stdout, stderr) {
         test.same(JSON.parse(stdout), ['concat','minify','test','deploy']);
         test.done();
@@ -315,7 +315,7 @@ exports['tasks - run all tasks'] = function(test) {
 
 exports['tasks - run selective task without dependencies'] = function(test) {
   // the concat task has no dependencies
-  alltasks = exec('node ' + __dirname + '/tasks/tasks.js concat',
+  alltasks = exec('node ' + __dirname + '/tasks/tasks.test.js concat',
       function (error, stdout, stderr) {
         test.same(JSON.parse(stdout), ['concat']);
         test.done();
@@ -324,7 +324,7 @@ exports['tasks - run selective task without dependencies'] = function(test) {
 
 exports['tasks - run selective task with dependencies'] = function(test) {
   // the minify task depends on concat
-  alltasks = exec('node ' + __dirname + '/tasks/tasks.js minify',
+  alltasks = exec('node ' + __dirname + '/tasks/tasks.test.js minify',
       function (error, stdout, stderr) {
         test.same(JSON.parse(stdout), ['concat', 'minify']);
         test.done();
@@ -333,7 +333,7 @@ exports['tasks - run selective task with dependencies'] = function(test) {
 
 exports['tasks - run selective task with dependencies (2)'] = function(test) {
   // the deploy task depends on test and indirectly on minify and concat
-  alltasks = exec('node ' + __dirname + '/tasks/tasks.js deploy',
+  alltasks = exec('node ' + __dirname + '/tasks/tasks.test.js deploy',
       function (error, stdout, stderr) {
         test.same(JSON.parse(stdout), ['concat','minify','test','deploy']);
         test.done();

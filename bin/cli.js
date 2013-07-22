@@ -39,15 +39,18 @@ function run () {
     else {
       // build script not found.
       // try the deprecated script name 'buildify.js'
+      file = process.cwd() + '/buildify.js';
       fs.exists(file, function (exists) {
-        var file = process.cwd() + '/buildify.js';
         if (exists) {
+          console.log('Warning: Script name \'buildify.js\' is deprecated, ' +
+              'use \'' + BUILD_SCRIPT + '\' instead.');
+
           // run the file
           require(file);
         }
         else {
           // no luck today
-          console.log('Error: build script \'' + BUILD_SCRIPT +
+          console.log('Error: Build script \'' + BUILD_SCRIPT +
               '\' missing in current directory.');
         }
       });

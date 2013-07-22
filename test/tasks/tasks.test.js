@@ -16,14 +16,14 @@ var output = [];
 buildify.task({
   name: 'minify',
   depends: ['concat'],
-  task: function () {
+  run: function () {
     output.push('minify');
   }
 });
 
 buildify.task({
   name: 'concat',
-  task: function () {
+  run: function () {
     output.push('concat');
   }
 });
@@ -31,7 +31,7 @@ buildify.task({
 buildify.task({
   name: 'test',
   depends: ['concat', 'minify'],
-  task: function () {
+  run: function () {
     output.push('test');
   }
 });
@@ -39,7 +39,7 @@ buildify.task({
 buildify.task({
   name: 'deploy',
   depends: ['test'],
-  task: function () {
+  run: function () {
     output.push('deploy');
   }
 });
