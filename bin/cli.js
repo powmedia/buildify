@@ -5,7 +5,7 @@
  * Builder for creating distributable JavaScript files from source.
  * Concatenate, wrap, uglify.
  *
- * This application will execute the script named `build.js` in the current
+ * This application will execute the script named 'build.js' in the current
  * directory.
  *
  * Usage:
@@ -19,6 +19,9 @@
  * If no tasks are provided, buildify will run the script including all tasks.
  */
 
+// load modules
+var fs = require('fs');
+
 // default build script
 var BUILD_SCRIPT = 'build.js';
 
@@ -27,7 +30,29 @@ var BUILD_SCRIPT = 'build.js';
  */
 function run () {
   var file = process.cwd() + '/' + BUILD_SCRIPT;
-  require(file);
+
+  fs.exists(file, function (exists) {
+    if (exists) {
+      // run the file
+      require(file);
+    }
+    else {
+      // build script not found.
+      // try the deprecated script name 'buildify.js'
+      fs.exists(file, function (exists) {
+        var file = process.cwd() + '/buildify.js';
+        if (exists) {
+          // run the file
+          require(file);
+        }
+        else {
+          // no luck today
+          console.log('Error: build script \'' + BUILD_SCRIPT +
+              '\' missing in current directory.');
+        }
+      });
+    }
+  });
 }
 
 /**
@@ -52,27 +77,16 @@ function version () {
  * Output a help message
  */
 function help() {
-  console.log('Buildify');
-  console.log();
-  console.log('Builder for creating distributable JavaScript files from source.');
-  console.log('Concatenate, wrap, uglify.');
-  console.log();
-  console.log('This application will execute the script named `build.js` in');
-  console.log('the current directory.');
-  console.log();
-  console.log('Usage:');
-  console.log('    buildify [tasks] {OPTIONS}');
-  console.log();
-  console.log('Options:');
-  console.log('    --version, -v  Show application version');
-  console.log('       --help, -h  Show this message');
-  console.log();
+  fs.readFile(__dirname + '/help.txt', function (err, data) {
+    console.log(err ? err.toString() : data.toString());
+  });
 }
 
 /**
  * Process input and output, based on the command line arguments
  */
 if (process.argv.length > 2) {
+  // TODO: real processing of command line argument...
   var arg = process.argv[2];
   if (arg == '-v' || arg == '--version') {
     version();

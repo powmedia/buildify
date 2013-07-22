@@ -2,7 +2,7 @@
   "author": "Charles Davison <charlie@powmedia.co.uk>",
   "name": "buildify",
   "description": "Builder for creating distributable JavaScript files from source. Concatenate, wrap, uglify.",
-  "version": "0.3.1",
+  "version": "0.5.0",
   "repository": {
     "type": "git",
     "url": "git://github.com/powmedia/buildify.git"
