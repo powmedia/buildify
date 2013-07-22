@@ -140,7 +140,7 @@ sections. Dependencies can be specified between tasks.
 By specifying tasks names as command line arguments, buildify will only run
 the specified tasks, taking into account their dependencies
 
-For example create a script named `buildify.js` with the following contents:
+For example create a script named `build.js` with the following contents:
 ```js
 var buildify = require('../index');
 
@@ -162,12 +162,12 @@ buildify.task({
 
 To run all tasks, just run the script:
 ```sh
-node buildify.js
+node build.js
 ```
 
 To run a specific task, specify the task name as command line arguments.
 ```sh
-node buildify.js concat
+node build.js concat
 ```
 
 ### Tasks API
@@ -188,7 +188,7 @@ Options:
 ## Command Line Interface
 
 When installed globally, the command line application `buildify` is available.
-Running `buildify` will execute the script named `buildify.js` in the current
+Running `buildify` will execute the script named `build.js` in the current
 directory (typically the root of a project).
 
 ```sh
@@ -201,15 +201,25 @@ If no tasks are provided, buildify will run the script including all tasks.
 
 ##Changelog
 
+0.5.0
+
+- Improved command line interface (josdejong)
+- Renamed default build script for the command line interface from `buildify.js`
+  to `build.js`.
+
 0.4.0
-Implemented tasks (josdejong)
+
+- Implemented tasks (josdejong)
 
 0.3.1
-Fix mangling (can be disabled with mangle: false option in uglify()) (powmedia, whadar)
+
+- Fix mangling (can be disabled with mangle: false option in uglify()) (powmedia, whadar)
 
 0.3.0
-Add cssmin() for minifying CSS (RustyMarvin)
-Fix tests under Windows (RustyMarvin)
+
+- Add cssmin() for minifying CSS (RustyMarvin)
+- Fix tests under Windows (RustyMarvin)
 
 0.2.0
-Add perform() for custom functions (trevorgerhardt)
+
+- Add perform() for custom functions (trevorgerhardt)
