@@ -192,11 +192,15 @@ Running `buildify` will execute the script named `build.js` in the current
 directory (typically the root of a project).
 
 ```sh
-buildify [tasks]
+buildify [tasks] {OPTIONS}
 ```
 
 Optionally, a list of task names can be provided to only execute specified tasks.
 If no tasks are provided, buildify will run the script including all tasks.
+
+Options:
+    - `--version`, `-v` Show application version
+    - `--help`, `-h` Show this message
 
 
 ##Changelog
