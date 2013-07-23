@@ -147,14 +147,14 @@ var buildify = require('buildify');
 buildify.task({
   name: 'task2',
   depends: ['task1'],
-  task: function () {
+  run: function () {
     console.log('task2...');
   }
 });
 
 buildify.task({
   name: 'task1',
-  task: function () {
+  run: function () {
     console.log('task1...');
   }
 });
@@ -203,9 +203,9 @@ If no tasks are provided, buildify will run the script including all tasks.
 
 0.5.0
 
-- Improved command line interface (josdejong)
+- Improved command line interface
 - Renamed default build script for the command line interface from `buildify.js`
-  to `build.js` to prevent name conflics on Windows.
+  to `build.js` to prevent name conflicts with the executable on Windows.
 - Renamed task property `task` to `run` for more clarity.
 
 0.4.0
