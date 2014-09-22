@@ -223,6 +223,28 @@ Builder.prototype.save = function(file) {
 };
 
 /**
+ * Create a symbolic link to the build file
+ *
+ * @param {String} file         File path relative to current directory
+ * @param {String} link         Link path relative to current directory
+ */
+Builder.prototype.symLink = function(file, link) {
+  file = path.normalize(this.dir + '/' + file);
+  link = path.normalize(this.dir + '/' + link);
+
+  var dir = path.dirname(file);
+
+  mkdirp.sync(dir);
+
+  if (fs.existsSync(link)) fs.unlinkSync(link);;
+  fs.symlinkSync(file, link);
+
+  if (!this.options.quiet) console.log("Linked to " + link);
+
+  return this;
+};
+
+/**
  * Reset/clear the contents
  */
 Builder.prototype.clear = function() {
