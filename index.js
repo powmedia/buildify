@@ -236,7 +236,7 @@ Builder.prototype.symLink = function(file, link) {
 
   mkdirp.sync(dir);
 
-  if (fs.existsSync(link)) fs.unlinkSync(link);;
+  if (fs.existsSync(link)) fs.unlinkSync(link);
   fs.symlinkSync(file, link);
 
   if (!this.options.quiet) console.log("Linked to " + link);
