@@ -2,7 +2,7 @@ var fs = require('fs'),
     path = require('path'),
     mkdirp = require('mkdirp'),
     _ = require('underscore'),
-    uglifyJS = require('uglify-js'),
+    uglifyJS = require('uglify-es'),
     cleanCSS = require('clean-css'),
     tasks = require('./tasks.js');
 
@@ -154,19 +154,16 @@ Builder.prototype.perform = function(fn) {
  */
 Builder.prototype.uglify = function(options) {
   options = _.extend({
+    compress: {
+      unused: false
+    },
     mangle: true
   }, options);
 
-  var parse = uglifyJS.parser.parse,
-      uglify = uglifyJS.uglify;
+  var output = uglifyJS.minify(this.content, options);
+  if (output.error) throw output.error;
 
-  var output = parse(this.content);
-
-  output = uglify.ast_mangle(output, { mangle: options.mangle });
-  output = uglify.ast_squeeze(output);
-  output = uglify.gen_code(output);
-
-  this.content = output;
+  this.content = output.code;
 
   return this;
 };

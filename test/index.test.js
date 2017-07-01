@@ -198,24 +198,29 @@ exports['perform'] = function(test) {
 exports['uglify'] = {
   'default options': function(test) {
     var b = builder();
+    var unminified = 'function test() { var longvar = 123; }';
+    var minified = 'function test(){var e=123}';
 
-    b.setContent('function test() { var longvar = 123; }');
+    b.setContent(unminified);
 
     b.uglify();
 
-    test.same(b.content, 'function test(){var e=123}');
+    test.same(b.content.length, minified.length);
 
     test.done();
   },
 
   'mangle: false': function(test) {
     var b = builder();
+    var unminified = 'function test() { var longvar = 123; }';
+    var mangled = 'function test(){var e=123}';
 
-    b.setContent('function test() { var longvar = 123; }');
+    b.setContent(unminified);
 
     b.uglify({ mangle: false });
 
-    test.same(b.content, 'function test(){var longvar=123}');
+    test.notEqual(b.content.length, mangled.length);
+    test.notEqual(b.content.length, unminified.length);
 
     test.done();
   }
