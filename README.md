@@ -35,7 +35,7 @@ buildify()
 
 ## API
 
-###buildify([dir, options])
+### buildify([dir, options])
 Create a new Builder instance.
 
 Takes the starting directory as the first argument, e.g. __dirname. If this is not set, the current working directory is used.
