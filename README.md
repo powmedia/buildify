@@ -4,7 +4,7 @@ buildify
 Builder for creating distributable JavaScript files from source. Concatenate, wrap, uglify.
 
 
-##Install
+## Install
 Requires [NodeJS](http://nodejs.org/#download) to run.
 
 Then install buildify via npm:
@@ -19,7 +19,7 @@ Create a file with your build script (see the example in 'Usage' below), call it
 node build.js
 ```
 
-##Usage
+## Usage
 
 ```js
 var buildify = require('buildify');
@@ -33,9 +33,9 @@ buildify()
   .save('../distribution/output.min.js');
 ```
 
-##API
+## API
 
-###buildify([dir, options])
+### buildify([dir, options])
 Create a new Builder instance.
 
 Takes the starting directory as the first argument, e.g. __dirname. If this is not set, the current working directory is used.
@@ -47,27 +47,27 @@ Options:
 - `quiet`         Whether to silence console output
 
 
-###setDir(absolutePath)
+### setDir(absolutePath)
 Set the current working directory.
 
 
-###changeDir(relativePath)
+### changeDir(relativePath)
 Change the current working directory.
 
 
-###setContent(content)
+### setContent(content)
 Set the content to work with.
 
 
-###getContent()
+### getContent()
 Get the current content. Note: breaks the chain.
 
 
-###load(file)
+### load(file)
 Load file contents.
 
 
-###concat(files, [eol])
+### concat(files, [eol])
 Concatenate the content of multiple files.
 
 ```js
@@ -76,7 +76,7 @@ buildify()
 ```
 
 
-###wrap(template, [data])
+### wrap(template, [data])
 Wrap the contents in a template.
 
 Useful for creating AMD/CommonJS compatible versions of code, adding notes/comments to the top of the file etc.
@@ -103,7 +103,7 @@ buildify()
     .wrap('template.js', { version: '1.0' });
 ```
 
-###perform(fn)
+### perform(fn)
 Perform a function on the content. The content is set to what the function returns.
 
 ```js
@@ -114,23 +114,23 @@ buildify()
      });
 ```
 
-###uglify(options)
+### uglify(options)
 Minimise your JS using uglifyJS.
 
 Options:
 - mangle: Whether to mangle output from UglifyJS. Default: true
 
 
-###cssmin([maxLineLength])
+### cssmin([maxLineLength])
 Minimise your CSS using clean-css.
 Optionally a line break is inserted after 'maxLineLength' characters in the minimized css file.
 
 
-###save(file)
+### save(file)
 Save the contents to a file.
 
 
-###clear()
+### clear()
 Reset/clear contents.
 
 ## Tasks
@@ -199,7 +199,7 @@ Optionally, a list of task names can be provided to only execute specified tasks
 If no tasks are provided, buildify will run the script including all tasks.
 
 
-##Changelog
+## Changelog
 
 0.4.0
 Implemented tasks (josdejong)
