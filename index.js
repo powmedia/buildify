@@ -3,7 +3,7 @@ var fs = require('fs'),
     mkdirp = require('mkdirp'),
     _ = require('underscore'),
     uglifyJS = require('uglify-es'),
-    cleanCSS = require('clean-css'),
+    CleanCSS = require('clean-css'),
     tasks = require('./tasks.js');
 
 /**
@@ -130,7 +130,7 @@ Builder.prototype.wrap = function(templatePath, templateData) {
 
   var templateStr = fs.readFileSync(templatePath, this.options.encoding);
 
-  this.content = _.template(templateStr, data);
+  this.content = _.template(templateStr)(data);
 
   return this;
 };
@@ -178,7 +178,7 @@ Builder.prototype.cssmin = function(maxLineLength) {
       startIndex,
       i;
 
-  content = cleanCSS.process(content);
+  content = new CleanCSS({}).minify(content).styles;
 
   // Some source control tools don't like it when files containing lines longer
   // than, say 8000 characters, are checked in. The linebreak option is used in
