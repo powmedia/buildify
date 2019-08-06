@@ -236,7 +236,7 @@ exports['cssmin'] = {
 
     b.cssmin();
 
-    test.same(b.content, '.cl{color:#FFF;font-weight:400;margin:0}.cx{color:#000;font-weight:700}');
+    test.same(b.content, '.cl{color:#fff;font-weight:400;margin:0}.cx{color:#000;font-weight:700}');
 
     test.done();
   },
@@ -249,7 +249,7 @@ exports['cssmin'] = {
 
     b.cssmin(39);
 
-    test.same(b.content, '.cl{color:#FFF;font-weight:400;margin:0}\n.cx{color:#000;font-weight:700}');
+    test.same(b.content, '.cl{color:#fff;font-weight:400;margin:0}\n.cx{color:#000;font-weight:700}');
 
     test.done();
   }
