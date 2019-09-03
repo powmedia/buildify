@@ -1,0 +1,15 @@
+Buildify
+https://github.com/powmedia/buildify
+
+Builder for creating distributable JavaScript files from source.
+Concatenate, wrap, uglify.
+
+This application will execute the script named 'build.js' in
+the current directory.
+
+Usage:
+    buildify [tasks] {OPTIONS}
+
+Options:
+    --version, -v  Show application version
+       --help, -h  Show this message

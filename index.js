@@ -250,7 +250,7 @@ var builderTasks = null; // singleton, lazy loaded
 module.exports.task = function (options) {
   // create a tasks if needed
   if (!builderTasks) {
-    builderTasks = tasks(options);
+    builderTasks = tasks();
   }
 
   // add the task to the list
